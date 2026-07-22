@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f7d9e4" />
+  <meta name="description" content="Confirmação de presença para o aniversário de 1 ano da Maria Alice." />
+  <title>1º Aninho da Maria Alice | Confirmação de Presença</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2.0" />
+</head>
+<body>
+  <div class="petals" aria-hidden="true"></div>
+
+  <header class="hero">
+    <div class="hero__overlay"></div>
+    <div class="container hero__content">
+      <span class="eyebrow">Você é nosso convidado especial</span>
+      <h1>O primeiro aninho da <strong>Maria Alice</strong></h1>
+      <p>Uma tarde de amor, alegria e lindas lembranças em um jardim encantado.</p>
+
+      <div class="hero__actions">
+        <a class="button button--primary" href="#confirmacao">Confirmar presença</a>
+        <a class="button button--ghost" href="#informacoes">Ver informações</a>
+      </div>
+
+      <div class="countdown" aria-label="Contagem regressiva para a festa">
+        <div><span id="days">--</span><small>dias</small></div>
+        <div><span id="hours">--</span><small>horas</small></div>
+        <div><span id="minutes">--</span><small>minutos</small></div>
+        <div><span id="seconds">--</span><small>segundos</small></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section welcome">
+      <div class="container two-columns">
+        <div class="invitation-card">
+          <picture>
+            <source srcset="convite-maria-alice.webp" type="image/webp">
+            <img src="convite-maria-alice.jpg" alt="Convite do aniversário de 1 ano da Maria Alice" />
+          </picture>
+        </div>
+
+        <div class="welcome__text">
+          <span class="eyebrow">Com muito carinho</span>
+          <h2>Venha celebrar conosco!</h2>
+          <p>
+            É com muita alegria que convidamos você e sua família para celebrar o
+            <strong>1º aninho da nossa princesa Maria Alice</strong>.
+          </p>
+          <p>
+            Será uma tarde muito especial, cheia de carinho, alegria e boas lembranças.
+            Ficaremos muito felizes em compartilhar esse momento tão importante com vocês.
+          </p>
+          <div class="signature">Gracelina, Wisner e Maria Alice 💕</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--soft" id="informacoes">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">Anote na agenda</span>
+          <h2>Informações da festa</h2>
+        </div>
+
+        <div class="info-grid">
+          <article class="info-card">
+            <div class="icon">📅</div>
+            <h3>Data</h3>
+            <p>15 de agosto de 2026</p>
+            <span>Sábado</span>
+          </article>
+
+          <article class="info-card">
+            <div class="icon">🕛</div>
+            <h3>Horário</h3>
+            <p>12h00</p>
+            <span>Almoço e comemoração</span>
+          </article>
+
+          <article class="info-card">
+            <div class="icon">📍</div>
+            <h3>Local</h3>
+            <p>Casarão 050</p>
+            <span>R. Naida Alves, 591 — Gleba Dea Maria, Uberaba/MG</span>
+          </article>
+        </div>
+
+        <div class="restaurant-note">
+          <div class="restaurant-note__icon">🍽️</div>
+          <div>
+            <h3>Sobre o almoço</h3>
+            <p>
+              O Casarão 050 trabalha com <strong>almoço à vontade no valor de R$ 58,00 por pessoa</strong>.
+              As bebidas são cobradas à parte, e cada convidado será responsável pelo pagamento do próprio consumo.
+            </p>
+          </div>
+        </div>
+
+        <div class="center">
+          <a class="button button--outline" target="_blank" rel="noopener"
+             href="https://www.google.com/maps/search/?api=1&query=Casar%C3%A3o+050+R.+Naida+Alves+591+Uberaba+MG">
+            Abrir localização no mapa
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section rsvp" id="confirmacao">
+      <div class="container rsvp__layout">
+        <div class="rsvp__intro">
+          <span class="eyebrow">Confirmação de presença</span>
+          <h2>Esperamos por você!</h2>
+          <p>
+            Confirme sua presença até <strong>10 de agosto de 2026</strong>, para que a mamãe e o papai
+            possam organizar o bolo e os docinhos que não podem faltar.
+          </p>
+          <div class="deadline">💌 Confirmação até 10/08/2026</div>
+        </div>
+
+        <form id="rsvpForm" class="form-card">
+          <div class="form-group">
+            <label for="responsavel">Seu nome completo *</label>
+            <input id="responsavel" name="responsavel" type="text" placeholder="Digite seu nome" required />
+          </div>
+
+          <div class="form-group">
+            <label for="whatsapp">WhatsApp para contato *</label>
+            <input id="whatsapp" name="whatsapp" type="tel" inputmode="tel"
+                   placeholder="(34) 99999-9999" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="adultos">Quantidade de adultos *</label>
+              <input id="adultos" name="adultos" type="number" min="1" max="20" value="1" required />
+            </div>
+            <div class="form-group">
+              <label for="criancas">Quantidade de crianças</label>
+              <input id="criancas" name="criancas" type="number" min="0" max="20" value="0" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="convidados">Nome das pessoas que irão com você *</label>
+            <textarea id="convidados" name="convidados" rows="4"
+              placeholder="Ex.: João da Silva, Ana da Silva e Pedro da Silva" required></textarea>
+            <small>Inclua também o seu nome na lista.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="observacoes">Observações</label>
+            <textarea id="observacoes" name="observacoes" rows="3"
+              placeholder="Alergias, restrições alimentares ou alguma informação importante"></textarea>
+          </div>
+
+          <label class="checkbox">
+            <input type="checkbox" id="ciente" name="ciente" required />
+            <span>
+              Estou ciente de que o almoço custa R$ 58,00 por pessoa, as bebidas são cobradas à parte
+              e cada convidado pagará o próprio consumo.
+            </span>
+          </label>
+
+          <button class="button button--primary button--full" type="submit">
+            Confirmar minha presença
+          </button>
+
+          <div id="formStatus" class="form-status" role="status" aria-live="polite"></div>
+          <p class="privacy">Seus dados serão usados apenas para a organização da festa.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="butterfly">🦋</div>
+      <p>Feito com amor para o primeiro aninho da Maria Alice.</p>
+      <small>15 de agosto de 2026 • Uberaba/MG</small>
+    </div>
+  </footer>
+
+  <script src="script.js?v=2.0"></script>
+</body>
+</html>
