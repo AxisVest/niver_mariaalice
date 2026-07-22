@@ -1,5 +1,5 @@
-// URL da implantação do Google Apps Script
-const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbxZzfFw-qbn0dLvdBtNub-bVrDhsy7cPCYg-q7-m9o_SYGDuwoeMRgoimwF-7FCe9fF/exec;
+// URL pública da implantação do Google Apps Script (/exec)
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZzfFw-qbn0dLvdBtNub-bVrDhsy7cPCYg-q7-m9o_SYGDuwoeMRgoimwF-7FCe9fF/exec";
 
 const form = document.getElementById("rsvpForm");
 const statusBox = document.getElementById("formStatus");
@@ -15,6 +15,43 @@ whatsappInput.addEventListener("input", (event) => {
   event.target.value = value;
 });
 
+function enviarPorJsonp(dados) {
+  return new Promise((resolve, reject) => {
+    const callbackName = `mariaAliceCallback_${Date.now()}_${Math.floor(Math.random() * 100000)}`;
+    const script = document.createElement("script");
+    const timeout = setTimeout(() => {
+      limpar();
+      reject(new Error("O servidor não confirmou o registro. Verifique a implantação pública do Apps Script."));
+    }, 15000);
+
+    function limpar() {
+      clearTimeout(timeout);
+      delete window[callbackName];
+      if (script.parentNode) script.parentNode.removeChild(script);
+    }
+
+    window[callbackName] = (resposta) => {
+      limpar();
+      if (resposta && resposta.success) resolve(resposta);
+      else reject(new Error(resposta?.message || "A planilha não confirmou o registro."));
+    };
+
+    const params = new URLSearchParams({
+      action: "confirmar",
+      callback: callbackName,
+      ...dados
+    });
+
+    script.src = `${GOOGLE_SCRIPT_URL}?${params.toString()}`;
+    script.async = true;
+    script.onerror = () => {
+      limpar();
+      reject(new Error("Não foi possível acessar o Apps Script. A implantação pode estar exigindo login."));
+    };
+    document.body.appendChild(script);
+  });
+}
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   statusBox.className = "form-status";
@@ -23,40 +60,35 @@ form.addEventListener("submit", async (event) => {
   const formData = new FormData(form);
   const adultos = Number(formData.get("adultos") || 0);
   const criancas = Number(formData.get("criancas") || 0);
+  const protocolo = `MA-${Date.now()}-${Math.random().toString(36).slice(2, 8).toUpperCase()}`;
 
-  const payload = new URLSearchParams();
-  payload.set("dataHora", new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" }));
-  payload.set("responsavel", formData.get("responsavel") || "");
-  payload.set("whatsapp", formData.get("whatsapp") || "");
-  payload.set("adultos", String(adultos));
-  payload.set("criancas", String(criancas));
-  payload.set("totalPessoas", String(adultos + criancas));
-  payload.set("convidados", formData.get("convidados") || "");
-  payload.set("observacoes", formData.get("observacoes") || "");
-  payload.set("ciente", formData.get("ciente") ? "Sim" : "Não");
+  const dados = {
+    protocolo,
+    dataHora: new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" }),
+    responsavel: formData.get("responsavel") || "",
+    whatsapp: formData.get("whatsapp") || "",
+    adultos: String(adultos),
+    criancas: String(criancas),
+    totalPessoas: String(adultos + criancas),
+    convidados: formData.get("convidados") || "",
+    observacoes: formData.get("observacoes") || "",
+    ciente: formData.get("ciente") ? "Sim" : "Não"
+  };
 
   submitButton.disabled = true;
-  submitButton.textContent = "Enviando confirmação...";
+  submitButton.textContent = "Registrando na planilha...";
 
   try {
-    // no-cors evita o bloqueio do navegador no redirecionamento do Apps Script.
-    // A requisição é enviada normalmente e a planilha recebe os dados.
-    await fetch(GOOGLE_SCRIPT_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-      body: payload.toString()
-    });
-
+    const resposta = await enviarPorJsonp(dados);
     form.reset();
     document.getElementById("adultos").value = 1;
     document.getElementById("criancas").value = 0;
     statusBox.className = "form-status success";
-    statusBox.textContent = "Presença confirmada! Ficamos muito felizes e esperamos vocês com carinho. 💕";
+    statusBox.textContent = `Presença registrada com sucesso! Protocolo: ${resposta.protocolo}. Esperamos vocês com carinho. 💕`;
   } catch (error) {
-    console.error("Falha ao enviar:", error);
+    console.error("Falha ao registrar:", error);
     statusBox.className = "form-status error";
-    statusBox.textContent = "Não foi possível enviar agora. Verifique sua internet e tente novamente.";
+    statusBox.textContent = "A confirmação NÃO foi registrada. No Apps Script, configure: Executar como EU e Quem pode acessar: QUALQUER PESSOA. Depois implante uma nova versão.";
   } finally {
     submitButton.disabled = false;
     submitButton.textContent = "Confirmar minha presença";
@@ -68,6 +100,7 @@ const partyDate = new Date("2026-08-15T12:00:00-03:00");
 function updateCountdown() {
   const distance = partyDate.getTime() - Date.now();
   const countdown = document.querySelector(".countdown");
+  if (!countdown) return;
 
   if (distance <= 0) {
     countdown.innerHTML = "<strong>Hoje é o grande dia! 🎉</strong>";
