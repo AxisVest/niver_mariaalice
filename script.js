@@ -1,5 +1,5 @@
 // URL da implantação do Google Apps Script
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxZzfFw-qbn0dLvdBtNub-bVrDhsy7cPCYg-q7-m9o_SYGDuwoeMRgoimwF-7FCe9fF/exec";
+const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbxZzfFw-qbn0dLvdBtNub-bVrDhsy7cPCYg-q7-m9o_SYGDuwoeMRgoimwF-7FCe9fF/exec;
 
 const form = document.getElementById("rsvpForm");
 const statusBox = document.getElementById("formStatus");
