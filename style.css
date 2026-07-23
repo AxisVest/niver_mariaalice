@@ -399,3 +399,16 @@ footer p { margin: 8px 0 2px; font-weight: 700; color: var(--pink-dark); }
   .form-row { grid-template-columns: 1fr; gap: 0; }
   .restaurant-note { flex-direction: column; }
 }
+@media (max-width: 520px) {
+  .hero {
+    min-height: 800px;
+  }
+
+  .hero__content {
+    padding: 70px 12px 90px;
+  }
+
+  .hero h1 {
+    font-size: 3rem;
+  }
+}
